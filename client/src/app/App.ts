@@ -454,6 +454,8 @@ export class App {
       model: "manual-override",
     };
     this.#manualHoldUntil = performance.now() + MANUAL_HOLD_MS;
+    // Drop any in-flight or queued AI decision so it can't overwrite the override.
+    this.scheduler.invalidate();
     this.dispatch({ type: "decisionShown", decision, pending: false });
     this.dispatch({ type: "decision", decision });
     this.hud.toast(`MANUAL OVERRIDE · ${strategy} · AI HOLD ${MANUAL_HOLD_MS / 1000}s`, 2000);

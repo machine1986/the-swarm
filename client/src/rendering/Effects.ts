@@ -108,10 +108,6 @@ export class Effects {
     this.burst(x, y, 0xff315a, 7, 30, 140, 0.25, 0.6, 0.3);
   }
 
-  ember(x: number, y: number, vx: number, vy: number): void {
-    this.#emit(x, y, vx + (Math.random() - 0.5) * 30, vy + (Math.random() - 0.5) * 30, 0xff4d6d, 0.6 + Math.random() * 0.8, 0.22 + Math.random() * 0.2, 0.6);
-  }
-
   burst(x: number, y: number, color: number, count: number, minSpeed: number, maxSpeed: number, minLife: number, maxLife: number, size: number): void {
     for (let n = 0; n < count; n++) {
       const a = Math.random() * TAU;

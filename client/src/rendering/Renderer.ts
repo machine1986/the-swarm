@@ -65,7 +65,8 @@ export class Renderer {
     this.#threats = new ThreatView(tex);
     this.#fx = new Effects(tex);
 
-    this.#trailWorld.addChild(this.#swarm.view);
+    // Bugs share the swarm's trail/bloom buffer so both read as the same kind of light.
+    this.#trailWorld.addChild(this.#threats.dotView, this.#swarm.view);
     this.#trailScene.addChild(this.#trailFade, this.#trailWorld);
 
     this.#trailRT = RenderTexture.create({ width: 16, height: 16, resolution: this.app.renderer.resolution });
@@ -179,7 +180,7 @@ export class Renderer {
 
     this.#background.update(dt, camX, camY, scale, world.urgency);
     this.#swarm.update(world, alpha, dt);
-    this.#threats.update(world.threats, dt, this.#fx, world.strategy === "ATTACK" ? world.attackTargetId : -1);
+    this.#threats.update(world.threats, dt, world.strategy === "ATTACK" ? world.attackTargetId : -1);
     this.#fx.update(dt, world);
 
     // Shorter trails when calm, longer streaks for fast moves and the singularity burst.
