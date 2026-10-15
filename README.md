@@ -12,6 +12,7 @@ Ein lebender Schwarm aus 1.000 Lichtpunkten, dessen Strategie in Echtzeit von **
 [![Node](https://img.shields.io/badge/Node.js-%E2%89%A522.18-5FA04E?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![TypeSafe Jev](https://img.shields.io/badge/AI-TypeSafe%20Jev-B388FF?style=flat-square)](https://docs.typesafe.ai)
 [![60 FPS](https://img.shields.io/badge/60%20FPS-1.000%20Partikel-00E5FF?style=flat-square)](#performance)
+[![License](https://img.shields.io/badge/License-Apache%202.0-D22128?style=flat-square)](LICENSE)
 
 **Ein Projekt von [KI Boost Mittelstand](https://www.kiboostmittelstand.de)**
 
@@ -103,7 +104,7 @@ Ein Druck auf **`D`** startet einen vollautomatischen Ablauf, der zugleich aufge
 ## Schnellstart
 
 ```bash
-git clone <repo-url> the-swarm && cd the-swarm
+git clone https://github.com/machine1986/the-swarm.git && cd the-swarm
 npm install
 cp .env.example .env        # TYPESAFE_API_KEY eintragen (optional)
 npm run dev                 # → http://127.0.0.1:5173
@@ -231,6 +232,10 @@ recordings/        gespeicherte Sessions (nicht eingecheckt)
 - Replays sind im selben Browser deterministisch. Über verschiedene JS-Engines hinweg ist das nicht garantiert. Rein visuelle Funken können minimal abweichen.
 - Einen direkten Videoexport gibt es nicht. Aufgenommen wird mit OBS bzw. per Bildschirmaufnahme.
 - Schriften kommen von Google Fonts. Offline greifen die Systemschriften.
+
+## Lizenz
+
+[Apache License 2.0](LICENSE). Siehe auch [NOTICE](NOTICE). Die Namen „KI Boost Mittelstand“ und „dotnet Services GmbH“ sind von der Lizenz nicht umfasst.
 
 ---
 

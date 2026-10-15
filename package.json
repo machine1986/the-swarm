@@ -2,10 +2,16 @@
   "name": "the-swarm",
   "private": true,
   "version": "1.0.0",
+  "license": "Apache-2.0",
   "type": "module",
-  "description": "THE SWARM — 1,000 individuals. One intelligence. Swarm visualization steered by TypeSafe Jev.",
-  "workspaces": ["client", "server"],
-  "engines": { "node": ">=22.18" },
+  "description": "THE SWARM \u2014 1,000 individuals. One intelligence. Swarm visualization steered by TypeSafe Jev.",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "build": "npm run typecheck && npm run build --workspace client",
