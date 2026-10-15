@@ -96,7 +96,13 @@ export class Renderer {
   resize(): void {
     this.width = this.app.screen.width;
     this.height = this.app.screen.height;
-    this.#trailRT.resize(this.width, this.height);
+    // Recreate the trail buffer: resizing it in place left a stretched picture after
+    // orientation changes (e.g. landscape → portrait).
+    const previous = this.#trailRT;
+    this.#trailRT = RenderTexture.create({ width: this.width, height: this.height, resolution: this.app.renderer.resolution });
+    this.#trailSprite.texture = this.#trailRT;
+    this.#bloomSprite.texture = this.#trailRT;
+    previous.destroy(true);
     this.#needsClear = true;
     this.#background.resize(this.width, this.height);
     this.#vignette.width = this.width;
