@@ -1,133 +1,251 @@
+<div align="center">
+
 # THE SWARM
 
-**1,000 INDIVIDUALS. ONE INTELLIGENCE.**
+### 1,000 INDIVIDUALS. ONE INTELLIGENCE.
 
-Interaktive Schwarm-Simulation mit 1.000 leuchtenden Individuen. Die Gegner sind rot leuchtende Punkte im selben Stil wie der Schwarm, etwa 1,8-mal so groß wie ein Individuum. Die strategischen Entscheidungen trifft **TypeSafe Jev** (`jev-latest`), die Bewegung jedes Individuums wird lokal per Boids-Algorithmus berechnet. Gebaut für ein Social-Media-Demovideo (1920×1080, optional 1080×1920).
+Ein lebender Schwarm aus 1.000 Lichtpunkten, dessen Strategie in Echtzeit von **TypeSafe Jev** entschieden wird.
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PixiJS](https://img.shields.io/badge/PixiJS-v8%20WebGL-E72264?style=flat-square)](https://pixijs.com/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev/)
+[![Node](https://img.shields.io/badge/Node.js-%E2%89%A522.18-5FA04E?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![TypeSafe Jev](https://img.shields.io/badge/AI-TypeSafe%20Jev-B388FF?style=flat-square)](https://docs.typesafe.ai)
+[![60 FPS](https://img.shields.io/badge/60%20FPS-1.000%20Partikel-00E5FF?style=flat-square)](#performance)
+
+**Ein Projekt von [KI Boost Mittelstand](https://www.kiboostmittelstand.de)**
+
+<br />
+
+<img src="docs/screenshots/demo.gif" alt="THE SWARM: Chaos-Event, Jev-Entscheidung und Singularity-Finale" width="100%" />
+
+</div>
+
+---
+
+## Worum es geht
+
+Tausend Individuen, kein Anführer. Jedes Lichtteilchen folgt nur einfachen lokalen Regeln. Erst zusammen entsteht ein Organismus, der flieht, angreift, sich schützt, sich teilt und wieder sammelt.
+
+Die **strategische Ebene** übernimmt eine echte KI. Alle 1,5 Sekunden oder sofort, wenn etwas passiert, bekommt **Jev** von [TypeSafe](https://docs.typesafe.ai) einen kompakten Lagebericht und beantwortet drei Fragen:
+
+| Frage | Primitive | Wirkung |
+|---|---|---|
+| Welche Strategie passt zur Lage? | `choice` | FLOCK · FLIGHT · ATTACK · DEFEND · SPLIT · REGROUP |
+| Wie dringend muss der Schwarm reagieren? | `score` (0–3) | Tempo der Formationswechsel, Kraft, Glow, Energiepuls |
+| Hat Energiesparen Vorrang? | `noul` | Maximalgeschwindigkeit und Energieverbrauch |
+
+Alles, was das HUD als Jev-Wert anzeigt, stammt unverändert aus der API-Antwort. Ohne API-Key läuft die App in einem klar gekennzeichneten **Simulationsmodus**.
+
+<p align="center">
+  <img src="docs/screenshots/hero.jpg" alt="Chaos-Event: Jev wählt DEFEND, der Schwarm bildet rotierende Schutzringe" width="100%" />
+  <br />
+  <sub>Live: 16 Bedrohungen tauchen auf. Jev entscheidet sich für <b>DEFEND</b> (57 %), mit Urgency 2.99 / 3 bei 193 ms Latenz.</sub>
+</p>
+
+## Sechs Strategien
+
+<table>
+  <tr>
+    <td width="33%"><img src="docs/screenshots/strategy-flock.jpg" alt="FLOCK" /><br /><b>FLOCK</b>: organische Schwarmbewegung, hohe Kohäsion</td>
+    <td width="33%"><img src="docs/screenshots/strategy-defend.jpg" alt="DEFEND" /><br /><b>DEFEND</b>: vier gegenläufig rotierende Ringe und eine Energiebarriere</td>
+    <td width="33%"><img src="docs/screenshots/strategy-attack.jpg" alt="ATTACK" /><br /><b>ATTACK</b>: Wirbel um das Ziel, bis es explodiert</td>
+  </tr>
+  <tr>
+    <td width="33%"><img src="docs/screenshots/strategy-flight.jpg" alt="FLIGHT" /><br /><b>FLIGHT</b>: lang gezogene Fluchtformation, weg von der Gefahr</td>
+    <td width="33%"><img src="docs/screenshots/strategy-split.jpg" alt="SPLIT" /><br /><b>SPLIT</b>: 2–4 Gruppen, jede reagiert auf ihren eigenen Gefahrenherd</td>
+    <td width="33%"><img src="docs/screenshots/strategy-regroup.jpg" alt="REGROUP" /><br /><b>REGROUP</b>: Verdichtung mit steigender Leuchtkraft, danach zurück zu FLOCK</td>
+  </tr>
+</table>
+
+Strategiewechsel werden weich überblendet: Steering Behaviors, interpolierte Parameter und Easing statt harter Sprünge.
+
+## Die 60-Sekunden-Demo
+
+Ein Druck auf **`D`** startet einen vollautomatischen Ablauf, der zugleich aufgezeichnet wird. Gedacht ist er für Social-Media-Videos.
+
+<table>
+  <tr>
+    <td width="33%"><img src="docs/screenshots/awakening.jpg" alt="Awakening" /><br /><b>0–8 s · Awakening</b><br />Ein Lichtpunkt teilt sich zu 1.000.</td>
+    <td width="33%"><img src="docs/screenshots/singularity-burst.jpg" alt="Singularity" /><br /><b>45–55 s · The Singularity</b><br />Kollaps zur Kugel, dann Explosion in tausende Lichtpartikel.</td>
+    <td width="33%"><img src="docs/screenshots/end-card.jpg" alt="End Card" /><br /><b>55–60 s · End Card</b><br /><i>Intelligence doesn't need words.</i></td>
+  </tr>
+</table>
+
+| Zeit | Szene | Wer entscheidet |
+|---|---|---|
+| 0–8 s | Awakening: Titel *1,000 INDIVIDUALS. / ONE INTELLIGENCE.* | Skript |
+| 8–18 s | First Contact: eine Bedrohung erscheint | **Jev** |
+| 18–30 s | Escalation: weitere Bedrohungen, Kamera zoomt heraus | **Jev** |
+| 30–45 s | Chaos: 18 Bedrohungen, *CRITICAL THREAT DETECTED* | **Jev** |
+| 45–55 s | The Singularity | Kinoeffekt, im HUD als *NOT A JEV DECISION* gekennzeichnet |
+| 55–60 s | End Card: *POWERED BY JEV* | Skript |
+
+## HUD
+
+<p align="center">
+  <img src="docs/screenshots/decision-engine.png" alt="Jev Decision Engine Panel" height="320" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/system-status.png" alt="System Status Panel" height="180" />
+</p>
+
+- **Modus** jederzeit sichtbar: `LIVE AI`, `SIMULATION` oder `REPLAY`
+- **Wahrscheinlichkeitsbalken** für alle sechs Strategien, Confidence, Urgency, Energy Conservation, Latenz und Request-ID
+- **Event Log** mit den letzten fünf Ereignissen
+- **Cinematic Mode** (`C`) blendet alles Nebensächliche aus
+- **Hochformat 9:16** mit eigenem Layout für Reels und Shorts
+
+<details>
+<summary><b>Hochformat-Ansicht (1080 × 1920)</b></summary>
+<p align="center"><img src="docs/screenshots/portrait.jpg" alt="Hochformat" width="360" /></p>
+</details>
 
 ## Schnellstart
 
 ```bash
+git clone <repo-url> the-swarm && cd the-swarm
 npm install
-cp .env.example .env          # TYPESAFE_API_KEY eintragen (optional)
-npm run dev                   # Backend :8787 + Vite :5173
+cp .env.example .env        # TYPESAFE_API_KEY eintragen (optional)
+npm run dev                 # → http://127.0.0.1:5173
 ```
-
-Dann **http://127.0.0.1:5173** öffnen.
 
 | Befehl | Zweck |
 |---|---|
-| `npm run dev` | Entwicklung: Backend (Watch) und Vite-Dev-Server |
-| `npm run build` | Typecheck (Client + Server) und Produktionsbuild nach `client/dist` |
-| `npm start` | Produktion: Express liefert Build und API auf **http://127.0.0.1:8787** |
-| `npm test` | Vitest: Simulation, Scheduler, Regeln, Jev-Normalisierung, Replay |
+| `npm run dev` | Backend (Port 8787, mit Watch) und Vite-Dev-Server (Port 5173) |
+| `npm run build` | Typecheck für Client und Server, Produktionsbuild |
+| `npm start` | Produktion: alles unter http://127.0.0.1:8787 |
+| `npm test` | 37 Tests (Vitest) |
 
-Voraussetzung: Node.js ≥ 22.18. Der Server läuft ohne Build-Schritt direkt als TypeScript.
+**Voraussetzung:** Node.js ≥ 22.18. Der Server läuft dank nativer TypeScript-Unterstützung von Node ohne Build-Schritt.
 
-## API-Key
+### API-Key
 
-Der Key liegt ausschließlich in der **`.env` im Projektroot** und wird nur vom Backend gelesen:
+Einen Key bekommst du unter [console.typesafe.ai/keys](https://console.typesafe.ai/keys). Er gehört in die `.env` im Projektroot:
 
-```
+```env
 TYPESAFE_API_KEY=...
+JEV_MAX_REQUESTS_PER_MINUTE=45   # optional
+JEV_MAX_REQUESTS_TOTAL=1500      # optional, pro Serverlauf
+JEV_TIMEOUT_MS=6000              # optional
 ```
 
-- Der Browser sieht den Key nie. `/api/status` meldet nur, ob ein Key konfiguriert ist.
-- `.env` steht in `.gitignore`, eingecheckt wird nur `.env.example`.
-- Optionale Limits: `JEV_MAX_REQUESTS_PER_MINUTE` (Standard 45), `JEV_MAX_REQUESTS_TOTAL` (1500 pro Serverlauf), `JEV_TIMEOUT_MS` (6000).
+Den Key liest **ausschließlich das Backend**. Er erreicht nie den Browser und wird nie zurückgegeben. `.env` ist in `.gitignore` eingetragen.
 
-**Ohne Key** läuft die App im Modus **SIMULATION**: Eine nachvollziehbare Regel-Engine (`shared/rules.ts`) entscheidet. Das HUD zeigt dann `LOCAL RULE ENGINE · NOT JEV`, schraffierte Balken mit `RULE` statt Prozenten und `N/A` bei Confidence. Simulierte Werte erscheinen nie als Jev-Wahrscheinlichkeiten.
-
-## Bedienung
+## Steuerung
 
 | Eingabe | Aktion |
 |---|---|
-| Linksklick auf die Bühne | Bedrohung an dieser Stelle |
-| `ADD THREAT` / `T` | Bedrohung nahe am Schwarm |
-| `SPAWN 5`, `CLEAR` | 5 Bedrohungen / alle entfernen |
-| `CHAOS MODE` / `X` | 15–20 Bedrohungen, Verdunkelung, Warnbanner, Jev bewertet neu |
-| `PAUSE` / Leertaste | Simulation anhalten (UI bleibt bedienbar) |
-| `RESET` / `R` | Alles zurücksetzen |
-| `CINEMATIC` / `C` | Nur Essentials sichtbar, Cursor aus (Esc beendet) |
-| `RECORD DEMO` / `D` | 60-Sekunden-Autopilot, wird automatisch aufgezeichnet |
-| `1`–`6` | Strategie manuell erzwingen (FLOCK … REGROUP), KI pausiert 8 s, Anzeige „MANUAL OVERRIDE · NOT JEV“ |
+| Klick auf die Bühne | Bedrohung an dieser Stelle |
+| `T` / ADD THREAT · SPAWN 5 · CLEAR | Bedrohungen hinzufügen bzw. entfernen |
+| `X` / CHAOS MODE | 15–20 Bedrohungen, Verdunkelung, Warnbanner |
+| `Leertaste` / PAUSE | Simulation anhalten, die Oberfläche bleibt bedienbar |
+| `R` / RESET | Alles zurücksetzen |
+| `C` / CINEMATIC | Aufnahme-Ansicht (Esc beendet sie) |
+| `D` / RECORD DEMO | 60-Sekunden-Autopilot inklusive Aufzeichnung |
+| `1`–`6` | Strategie manuell erzwingen. Die KI pausiert 8 s, das HUD zeigt *MANUAL OVERRIDE · NOT JEV* |
 
-## Wie Jev entscheidet
+## Wie es funktioniert
 
-Etwa alle 1,5 s schickt der Client einen **kompakten Zustand** an `POST /api/decide`: Population, Energie, Kohäsion, Dispersion, Bedrohungsanzahl, Distanz, Sektoren usw. Einzelne Partikelpositionen werden nie gesendet. Der `JevService` (`server/src/services/JevService.ts`) stellt in **einem** `systemOne`-Aufruf drei unabhängige Fragen:
+```mermaid
+flowchart LR
+    subgraph Browser
+        SIM["World<br/>Boids · 60 Hz fixed step<br/>Seeded RNG"] -->|kompakter SwarmState| SCH[DecisionScheduler]
+        SCH -->|DecisionResult| SIM
+        SIM --> R["PixiJS Renderer<br/>1 Draw Call · Trails · Bloom"]
+        SIM --> HUD[HTML-HUD]
+        BUS((Command-Bus)) --> SIM
+        BUS --> REC[Recorder / Replayer]
+    end
+    SCH -->|POST /api/decide| API[Express]
+    API --> JEV["JevService<br/>choice + score + noul"]
+    JEV -->|systemOne| TS[(TypeSafe Jev)]
+    API -. kein Key / Fehler .-> RULES[Regel-Engine<br/>SIMULATION]
+```
 
-- **strategy** (`choice`): FLOCK / FLIGHT / ATTACK / DEFEND / SPLIT / REGROUP
-- **urgency** (`score`, Rubrik 0–3): normalisiert als `score / 3`, steuert Übergangsgeschwindigkeit, Pulsstärke, Kraft und Glow
-- **conserveEnergy** (`noul`): drosselt Maximalgeschwindigkeit und Energieverbrauch
+**Simulation.** Klassische Boids (Separation, Alignment, Cohesion), erweitert um Threat Avoidance, Formation Targeting und Strategy Steering. Die Nachbarsuche läuft über einen Spatial Hash, der jeden Schritt per Counting Sort neu aufgebaut wird, ohne Allokationen pro Frame.
 
-Die Antwort wird strikt validiert. Fehlt ein Wert oder ist er ungültig, wird die ganze Antwort verworfen, statt sie aufzufüllen. Das Ergebnis ist ein typisiertes `DecisionResult` mit Latenz, Modellversion und Request-ID.
+**KI-Integration.** Ein einziger `systemOne`-Aufruf stellt drei unabhängige Fragen zum selben Zustand:
 
-Der **DecisionScheduler** (`client/src/api/DecisionScheduler.ts`) sorgt für:
+```ts
+const response = await client.systemOne({
+  state: swarmState,                        // ~500 Byte, keine Partikelpositionen
+  questions: {
+    strategy:       choice("Which swarm behavior is most appropriate…", { FLOCK: "…", FLIGHT: "…", /* … */ }),
+    urgency:        score("How urgently does the swarm need to react…", ["No immediate danger…", /* … */]),
+    conserveEnergy: noul("Conserving the swarm's remaining energy should take priority…"),
+  },
+});
+```
 
+Die Antwort wird strikt validiert. Fehlt ein Wert, wird die ganze Antwort verworfen, statt sie aufzufüllen.
+
+**Scheduler.**
 - maximal eine laufende Anfrage
-- sofortige Neubewertung bei Ereignissen, mit 650 ms Sperrfrist
-- 2,4 s Cooldown für Strategiewechsel (1 s bei hoher Urgency)
-- Verwerfen veralteter Antworten nach einem Reset
-- langsameres Intervall im Leerlauf
-- Request-Budget (Client und Server)
-- bei Fehlern: Backoff (3 → 6 → 15 → 30 s) und bis dahin gekennzeichnete lokale Regeln
+- Neubewertung bei Ereignissen, mit Sperrfrist
+- Cooldown für Strategiewechsel
+- Verwerfen veralteter Antworten
+- Request-Budget auf Client und Server
+- bei Fehlern: Backoff (3 → 6 → 15 → 30 s) und so lange gekennzeichnete lokale Regeln
 
-Die Animation läuft unabhängig davon weiter.
-
-## Autopilot-Demo (`RECORD DEMO`)
-
-| Zeit | Szene |
-|---|---|
-| 0–8 s | **Awakening**: ein Lichtpunkt teilt sich zu 1.000 Individuen, Titel |
-| 8–18 s | **First Contact**: eine Bedrohung, Jev entscheidet live |
-| 18–30 s | **Escalation**: weitere Bedrohungen, Kamera zoomt heraus |
-| 30–45 s | **Chaos**: 18 Bedrohungen, „CRITICAL THREAT DETECTED“ |
-| 45–55 s | **The Singularity**: Verdichtung zur hellen Kugel, Explosion in tausende Lichtpartikel |
-| 55–60 s | **End Card**: „INTELLIGENCE DOESN'T NEED WORDS. · POWERED BY JEV“ |
-
-Bedrohungen, Titel und Kamera sind geskriptet. Die Strategie in den Szenen 2–4 kommt von Jev. Die Singularity ist ausdrücklich ein Kinoeffekt: Das HUD zeigt dabei `AI PAUSED` und `CINEMATIC SEQUENCE · NOT A JEV DECISION`.
+Die Animation läuft immer weiter.
 
 ## Record & Replay
 
-Echte Jev-Sessions lassen sich aufnehmen und beliebig oft ohne API-Aufrufe abspielen. Das ist ideal fürs Video.
+Echte KI-Sessions aufnehmen und beliebig oft abspielen, **ohne erneute API-Aufrufe** und ohne Netzwerk-Latenz im Video.
 
-1. **START REC** (oder `RECORD DEMO`) startet einen frischen Schwarm mit neuem Seed und zeichnet auf.
-2. **STOP REC** speichert die Aufnahme automatisch als `recordings/swarm-<zeit>.json`.
-3. **EXPORT** lädt die zuletzt aufgenommene oder geladene Aufnahme als Datei herunter.
-4. **LOAD** öffnet eine Aufnahme aus `recordings/` oder aus einer Datei.
-5. **PLAY REPLAY** spielt sie ab. Das HUD zeigt `REPLAY` und „● RECORDED JEV DECISIONS“.
+1. `START REC` oder `RECORD DEMO`: Ein frischer Schwarm mit neuem Seed startet und wird aufgezeichnet.
+2. `STOP REC`: Die Aufnahme wird automatisch als `recordings/swarm-<zeit>.json` gespeichert.
+3. `LOAD` → `PLAY REPLAY`: Das HUD zeigt `REPLAY · RECORDED JEV DECISIONS`.
 
-Aufgezeichnet werden alle Kommandos mit ihrem Simulations-Tick: Bedrohungen, Benutzeraktionen, Jev-Anfragen samt Zustand, Jev-Antworten, Strategiewechsel, Kamera und Titel, plus Seed und Weltgröße. Die Reproduzierbarkeit kommt von einem Seeded RNG (Mulberry32), einem festen 60-Hz-Physik-Timestep und einem einzigen Command-Bus. Ein Test prüft, dass Live-Lauf und Replay bitgenau übereinstimmen.
+Reproduzierbar ist das durch einen Seeded RNG, einen festen Physik-Timestep und einen einzigen Command-Bus, über den jede Zustandsänderung läuft, mit Tick-Stempel. Ein Test prüft, dass Live-Lauf und Replay identische Positionen liefern.
 
-## Video-Tipps
+## Performance
 
-- Browserfenster auf 1920×1080 (oder 1080×1920 für das Hochformat-Layout), dann `C` für Cinematic Mode.
-- Erst die Demo live aufnehmen (`D`), dann für die OBS-Aufnahme `PLAY REPLAY` nutzen. So stören keine Netzwerklatenzen.
+| | |
+|---|---|
+| Partikel | 1.000 Individuen in **einem** Draw Call (`ParticleContainer`) |
+| Trails | ausblendender Render-Buffer statt Partikelhistorie |
+| Glow | Bloom über einen weichgezeichneten Buffer bei halber Auflösung |
+| Physik | fester 60-Hz-Timestep mit Interpolation, unabhängig von der Bildrate |
+| Gemessen | stabile **60 FPS** bei 1920 × 1080 in Chrome (Apple Silicon), auch mit 18 Bedrohungen im Chaos-Modus |
 
-## Architektur
+## Projektstruktur
 
 ```
-shared/          Typen (SwarmState, DecisionResult …) + Regel-Engine, von Client und Server genutzt
-server/src/      Express: /api/status, /api/decide, /api/recordings
-  services/      JevService (TypeSafe SDK), RequestBudget
+shared/            Typen + Regel-Engine (Client & Server)
+server/src/        Express-API, JevService, Request-Budget, Validierung
 client/src/
-  simulation/    World (Boids + Formationen + Energie, deterministisch), SpatialHash, RNG, Metriken
-  rendering/     PixiJS v8: ParticleContainer (1 Draw Call), Trail-Feedback-Buffer + Bloom,
-                 Bedrohungen, Effekte (Pulse, Funken, Barriere), Hintergrund, Kamera
-  api/           API-Client, DecisionScheduler
-  hud/           HTML/CSS-HUD und Overlays
-  demo/          Autopilot-Skript
-  replay/        Recorder / Replayer
-  app/           App: Frame-Loop, Command-Bus, Eingaben
+  simulation/      World, SpatialHash, RNG, Metriken, Strategien
+  rendering/       PixiJS: Schwarm, Bedrohungen, Effekte, Hintergrund, Kamera
+  api/             API-Client, DecisionScheduler
+  hud/             HUD und Overlays (HTML/CSS)
+  demo/            Autopilot-Skript
+  replay/          Recorder / Replayer
+docs/screenshots/  Bilder für diese README
+recordings/        gespeicherte Sessions (nicht eingecheckt)
 ```
-
-Zur Performance: 1.000 Partikel werden per Struct-of-Arrays und Spatial Hash (Counting Sort, keine Allokationen pro Frame) berechnet, mit festem Timestep und Interpolation. Trails entstehen über einen ausblendenden Render-Buffer statt über Partikelhistorien. Gemessen: stabile 60 FPS in Chrome auf Apple Silicon bei 1920×1080.
 
 ## Bekannte Einschränkungen
 
-- Eine Aufnahme beginnt immer mit einem frischen Schwarm. Mitten in einer laufenden Session lässt sich nicht aufnehmen.
-- Replays sind im selben Browser bzw. derselben JS-Engine deterministisch. Über verschiedene Engines hinweg ist Gleitkomma-Gleichheit nicht garantiert.
-- Rein visuelle Effekte (Funken, Glut) nutzen `Math.random` und können sich im Replay minimal unterscheiden. Die Simulation selbst ist identisch.
-- Zeitstempel im Event-Log zeigen beim Replay die Wiedergabezeit.
-- Schriften kommen von Google Fonts. Offline wird auf Systemschriften zurückgefallen.
-- Einen direkten Videoexport gibt es nicht. Aufnahme über OBS bzw. Bildschirmaufnahme.
-- Das Server-Budget (`JEV_MAX_REQUESTS_TOTAL`) gilt pro Serverprozess und wird bei Neustart zurückgesetzt.
+- Eine Aufnahme beginnt immer mit einem frischen Schwarm.
+- Replays sind im selben Browser deterministisch. Über verschiedene JS-Engines hinweg ist das nicht garantiert. Rein visuelle Funken können minimal abweichen.
+- Einen direkten Videoexport gibt es nicht. Aufgenommen wird mit OBS bzw. per Bildschirmaufnahme.
+- Schriften kommen von Google Fonts. Offline greifen die Systemschriften.
+
+---
+
+<div align="center">
+
+## Über uns
+
+<a href="https://www.kiboostmittelstand.de"><b>KI Boost Mittelstand</b></a><br />
+<i>Die rechte Hand, die Sie nie eingestellt haben.</i>
+
+THE SWARM zeigt, was entsteht, wenn viele einfache Teile von einer klugen Entscheidungsinstanz geführt werden.<br />
+Genau das bauen wir für den Mittelstand: KI-Assistenz, die Büroarbeit übernimmt, mit festem Preis, festem Ergebnis und festem Zeitrahmen.
+
+**[www.kiboostmittelstand.de →](https://www.kiboostmittelstand.de)**
+
+<sub>KI Boost Mittelstand ist eine Marke der dotnet Services GmbH.</sub>
+
+</div>
