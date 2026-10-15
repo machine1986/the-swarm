@@ -6,3 +6,4 @@ dist/
 recordings/*.json
 .DS_Store
 *.log
+exports/
