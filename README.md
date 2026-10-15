@@ -200,6 +200,21 @@ Echte KI-Sessions aufnehmen und beliebig oft abspielen, **ohne erneute API-Aufru
 
 Reproduzierbar ist das durch einen Seeded RNG, einen festen Physik-Timestep und einen einzigen Command-Bus, über den jede Zustandsänderung läuft, mit Tick-Stempel. Ein Test prüft, dass Live-Lauf und Replay identische Positionen liefern.
 
+### Video-Export
+
+Eine Aufnahme lässt sich Bild für Bild zu einem Video rendern, ohne Ruckler und unabhängig davon, wie schnell der Rechner ist:
+
+```bash
+npm run dev                                              # App muss laufen
+npm run render:video                                     # neueste Aufnahme → exports/*.mp4
+npm run render:video -- recordings/<datei>.json --prores # zusätzlich ProRes 422 HQ für Premiere
+```
+
+- **Format:** folgt der Aufnahme. Eine Demo im Querformat ergibt 1920 × 1080, eine im Hochformat-Fenster aufgenommene Demo ergibt 1080 × 1920 für Reels und Shorts.
+- **Technik:** Im Browser läuft eine virtuelle Uhr (Timer, `requestAnimationFrame`, CSS-Animationen). Jedes Bild rückt exakt 1/60 s vor, die Bilder gehen direkt an ffmpeg.
+- **Ausgabe:** H.264 (CRF 16, BT.709), optional ProRes 10 Bit. Der Hinweis „Recorded Jev decisions“ wird ausgeblendet, `--keep-replay-tag` behält ihn.
+- **Voraussetzungen:** Google Chrome und ffmpeg.
+
 ## Performance
 
 | | |

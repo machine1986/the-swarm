@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "type": "module",
-  "description": "THE SWARM \u2014 1,000 individuals. One intelligence. Swarm visualization steered by TypeSafe Jev.",
+  "description": "THE SWARM — 1,000 individuals. One intelligence. Swarm visualization steered by TypeSafe Jev.",
   "workspaces": [
     "client",
     "server"
@@ -17,9 +17,11 @@
     "build": "npm run typecheck && npm run build --workspace client",
     "typecheck": "tsc -p client/tsconfig.json && tsc -p server/tsconfig.json",
     "start": "npm run start --workspace server",
-    "test": "vitest run"
+    "test": "vitest run",
+    "render:video": "node scripts/render-video.mjs"
   },
   "devDependencies": {
+    "playwright-core": "^1.64.1",
     "typescript": "^7.0.0",
     "vitest": "^5.0.0"
   }
