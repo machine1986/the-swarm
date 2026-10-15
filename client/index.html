@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE SWARM</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23030712'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%2300E5FF'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%2300FFD1' stroke-width='1.5' opacity='.6'/%3E%3C/svg%3E"
+    />
+    <meta name="description" content="1,000 individuals. One intelligence. A swarm steered by TypeSafe Jev." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="stage"></div>
+
+    <div id="hud">
+      <header class="panel brand">
+        <div class="brand-title"><span class="status-glyph"><i></i><i></i><i></i></span>THE SWARM</div>
+        <div class="brand-tagline">1,000 INDIVIDUALS.<br />ONE INTELLIGENCE.</div>
+      </header>
+
+      <section class="panel status">
+        <div class="panel-label">SYSTEM STATUS</div>
+        <div class="mode" data-mode="simulation">
+          <span class="mode-dot"></span><span id="mode-label">CONNECTING</span>
+        </div>
+        <div class="mode-detail" id="mode-detail">—</div>
+        <dl class="stats">
+          <dt>FPS</dt><dd id="stat-fps">—</dd>
+          <dt>POPULATION</dt><dd id="stat-pop">—</dd>
+          <dt>ACTIVE THREATS</dt><dd id="stat-threats">—</dd>
+          <dt>ENERGY</dt><dd id="stat-energy">—</dd>
+        </dl>
+        <div class="meter"><span id="energy-bar"></span></div>
+      </section>
+
+      <section class="panel engine">
+        <div class="panel-label">JEV DECISION ENGINE</div>
+        <div class="engine-source" id="engine-source">AWAITING FIRST DECISION</div>
+        <div class="engine-strategy">
+          <span id="engine-strategy">—</span>
+          <span class="engine-chip" id="engine-chip"></span>
+        </div>
+        <div class="engine-active" id="engine-active">ACTIVE BEHAVIOR · FLOCK</div>
+        <div class="bars" id="bars"></div>
+        <dl class="engine-metrics">
+          <dt>CONFIDENCE</dt><dd id="m-confidence">—</dd>
+          <dt>URGENCY</dt><dd><span id="m-urgency">—</span><span class="urgency-steps" id="urgency-steps"><i></i><i></i><i></i><i></i></span></dd>
+          <dt>ENERGY CONSERVATION</dt><dd id="m-conserve">—</dd>
+          <dt>LAST DECISION</dt><dd id="m-last">—</dd>
+          <dt>API LATENCY</dt><dd id="m-latency">—</dd>
+        </dl>
+        <div class="engine-error" id="engine-error" hidden></div>
+      </section>
+
+      <section class="panel log">
+        <div class="panel-label">EVENT LOG</div>
+        <ol id="log"></ol>
+      </section>
+
+      <section class="panel controls">
+        <div class="controls-row">
+          <button data-action="addThreat" title="T · or click the stage">ADD THREAT</button>
+          <button data-action="spawn5">SPAWN 5</button>
+          <button data-action="clear">CLEAR</button>
+          <button data-action="chaos" class="danger" title="X">CHAOS MODE</button>
+        </div>
+        <div class="controls-row">
+          <button data-action="pause" title="Space">PAUSE</button>
+          <button data-action="reset" title="R">RESET</button>
+          <button data-action="cinematic" title="C">CINEMATIC</button>
+          <button data-action="demo" class="accent" title="D · autopilot + recording">RECORD DEMO</button>
+        </div>
+        <div class="controls-row rec">
+          <button data-action="record"><span class="rec-dot"></span><span>START REC</span></button>
+          <button data-action="export">EXPORT</button>
+          <button data-action="load">LOAD</button>
+          <button data-action="replay">PLAY REPLAY</button>
+        </div>
+        <div class="controls-hint">CLICK STAGE: THREAT · 1–6: FORCE STRATEGY · D: DEMO · C: CINEMATIC</div>
+      </section>
+
+      <div class="replay-tag" id="replay-tag" hidden>● RECORDED JEV DECISIONS</div>
+      <div class="cinematic-tag" id="cinematic-tag" hidden></div>
+    </div>
+
+    <div id="overlay">
+      <div class="title-block">
+        <div class="title-hero" id="title-hero"></div>
+        <div class="title-sub" id="title-sub"></div>
+      </div>
+      <div class="warning" id="warning" hidden>
+        <span class="chev">◢◤</span><span id="warning-text"></span><span class="chev">◢◤</span>
+      </div>
+      <div class="scene-label" id="scene-label"></div>
+      <div class="end-card" id="end-card" hidden>
+        <div class="end-lines"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="end-title">THE SWARM</div>
+        <div class="end-tagline">INTELLIGENCE DOESN'T NEED WORDS.</div>
+        <div class="end-powered">POWERED BY <b>JEV</b></div>
+      </div>
+    </div>
+
+    <div id="toast" hidden></div>
+
+    <dialog id="load-dialog">
+      <form method="dialog">
+        <div class="panel-label">LOAD RECORDING</div>
+        <ul id="load-list"></ul>
+        <div class="dialog-actions">
+          <button type="button" id="load-file">FROM FILE…</button>
+          <button value="cancel">CLOSE</button>
+        </div>
+      </form>
+    </dialog>
+    <input type="file" id="file-input" accept="application/json,.json" hidden />
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
