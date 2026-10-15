@@ -6,7 +6,8 @@ import type { Textures } from "./textures.ts";
 
 const SWARM = 0x00e5ff;
 const ACTIVE = 0x00ffd1;
-const BASE_SCALE = 0.155;
+/** Base sprite scale of one swarm individual; threats are sized relative to it. */
+export const SWARM_DOT_SCALE = 0.155;
 
 /** All 1,000 individuals in a single batched draw call: glowing core stretched along velocity. */
 export class SwarmView {
@@ -52,7 +53,7 @@ export class SwarmView {
       const ivy = vy[i]!;
       const speed = Math.sqrt(ivx * ivx + ivy * ivy);
       p.rotation = Math.atan2(ivy, ivx);
-      const s = BASE_SCALE * sizeBoost * (0.85 + bright[i]! * 0.3);
+      const s = SWARM_DOT_SCALE * sizeBoost * (0.85 + bright[i]! * 0.3);
       p.scaleX = s * (1 + Math.min(speed / 230, 2.6));
       p.scaleY = s;
       const h = heat[i]!;

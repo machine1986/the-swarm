@@ -2,7 +2,7 @@
 
 **1,000 INDIVIDUALS. ONE INTELLIGENCE.**
 
-Interaktive Schwarm-Simulation mit 1.000 leuchtenden Individuen. Die Gegner sind Käfer aus rot leuchtenden Punkten, im selben Stil wie der Schwarm: Sie laufen im Dreifuß-Gang, schwenken die Fühler und setzen sich beim Erscheinen aus einer Punktwolke zusammen. Die strategischen Entscheidungen trifft **TypeSafe Jev** (`jev-latest`), die Bewegung jedes Individuums wird lokal per Boids-Algorithmus berechnet. Gebaut für ein Social-Media-Demovideo (1920×1080, optional 1080×1920).
+Interaktive Schwarm-Simulation mit 1.000 leuchtenden Individuen. Die Gegner sind rot leuchtende Punkte im selben Stil wie der Schwarm, etwa 1,8-mal so groß wie ein Individuum. Die strategischen Entscheidungen trifft **TypeSafe Jev** (`jev-latest`), die Bewegung jedes Individuums wird lokal per Boids-Algorithmus berechnet. Gebaut für ein Social-Media-Demovideo (1920×1080, optional 1080×1920).
 
 ## Schnellstart
 

@@ -65,8 +65,8 @@ export class Renderer {
     this.#threats = new ThreatView(tex);
     this.#fx = new Effects(tex);
 
-    // Bugs share the swarm's trail/bloom buffer so both read as the same kind of light.
-    this.#trailWorld.addChild(this.#threats.dotView, this.#swarm.view);
+    // Threat dots share the swarm's trail/bloom buffer so both read as the same kind of light.
+    this.#trailWorld.addChild(this.#threats.view, this.#swarm.view);
     this.#trailScene.addChild(this.#trailFade, this.#trailWorld);
 
     this.#trailRT = RenderTexture.create({ width: 16, height: 16, resolution: this.app.renderer.resolution });
@@ -74,7 +74,7 @@ export class Renderer {
     this.#bloomSprite = new Sprite({ texture: this.#trailRT, blendMode: "add", alpha: 0.85 });
     this.#bloomSprite.filters = [new BlurFilter({ strength: 10, quality: 3, resolution: 0.5 })];
 
-    this.#world.addChild(this.#threats.view, this.#fx.view);
+    this.#world.addChild(this.#fx.view);
     this.#vignette = new Sprite({ texture: tex.vignette });
 
     // Darkening sits under the swarm: it dims the stage, the light stays bright.

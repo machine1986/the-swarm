@@ -966,7 +966,7 @@ export class World {
       vx: 0,
       vy: 0,
       heading: rng.next() * TAU,
-      radius: rng.range(17, 29),
+      radius: rng.range(8, 12),
       speed: rng.range(14, 34),
       strength,
       health: 0,
